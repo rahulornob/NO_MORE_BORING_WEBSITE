@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "@/app/globals.css";
 import { SiteHeader } from "@/components/site-header";
+import { AuthProvider } from "@/context/auth-context";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nomoreboringwebsites.com"),
@@ -31,8 +32,10 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   return (
     <html lang="en">
       <body>
-        <SiteHeader />
-        {children}
+        <AuthProvider>
+          <SiteHeader />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

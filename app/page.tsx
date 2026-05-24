@@ -1,12 +1,13 @@
 import { GalleryExplorer } from "@/components/gallery-explorer";
 import { ScrollHero } from "@/components/scroll-hero";
-import { websites } from "@/lib/sites";
+import { getWebsites } from "@/lib/db";
 
 export default function Home() {
+  const sites = getWebsites();
   return (
     <>
       <ScrollHero />
-      <GalleryExplorer sites={websites} />
+      <GalleryExplorer sites={sites} />
     </>
   );
 }
