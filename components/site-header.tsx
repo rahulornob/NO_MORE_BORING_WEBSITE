@@ -9,7 +9,7 @@ import { useState } from "react";
 import { clsx } from "clsx";
 
 export function SiteHeader() {
-  const { user, logout, setIsSigningIn } = useAuth();
+  const { user, logout, setIsSigningIn, isGrayscale, toggleGrayscale } = useAuth();
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -59,6 +59,23 @@ export function SiteHeader() {
 
           {/* User Section / Action */}
           <div className="flex items-center gap-4">
+            {/* Grayscale Toggle */}
+            <button
+              onClick={toggleGrayscale}
+              title={isGrayscale ? "Disable Black & White mode" : "Enable Black & White mode"}
+              className={clsx(
+                "rounded-full border p-2 transition duration-300",
+                isGrayscale
+                  ? "border-violet-500/40 bg-violet-500/10 text-violet-400 shadow-[0_0_12px_rgba(139,92,246,0.15)]"
+                  : "border-white/10 bg-white/[0.02] text-white/60 hover:border-white/20 hover:text-white"
+              )}
+            >
+              <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 2a10 10 0 0 1 0 20V2z" fill="currentColor" />
+              </svg>
+            </button>
+
             {user ? (
               <div className="flex items-center gap-3">
                 {/* User avatar & info */}

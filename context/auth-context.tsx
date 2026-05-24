@@ -18,6 +18,8 @@ type AuthContextType = {
   toggleFavorite: (siteId: string) => Promise<void>;
   isSigningIn: boolean;
   setIsSigningIn: (val: boolean) => void;
+  isGrayscale: boolean;
+  toggleGrayscale: () => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,6 +28,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [isSigningIn, setIsSigningIn] = useState(false);
+  const [isGrayscale, setIsGrayscale] = useState(false);
 
   // Sync favorites from database when user changes
   useEffect(() => {
@@ -47,6 +50,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } catch (e) {
         localStorage.removeItem("nbw_user");
       }
+    }
+
+    // Sync Grayscale theme choice on load
+    const savedGrayscale = localStorage.getItem("nbw_grayscale") === "true";
+    setIsGrayscale(savedGrayscale);
+    if (savedGrayscale) {
+      document.documentElement.classList.add("grayscale-mode");
+    } else {
+      document.documentElement.classList.remove("grayscale-mode");
     }
   }, []);
 
@@ -74,6 +86,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setFavorites(updatedFavs);
   };
 
+  const toggleGrayscale = () => {
+    const nextVal = !isGrayscale;
+    setIsGrayscale(nextVal);
+    localStorage.setItem("nbw_grayscale", String(nextVal));
+    if (nextVal) {
+      document.documentElement.classList.add("grayscale-mode");
+    } else {
+      document.documentElement.classList.remove("grayscale-mode");
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -84,6 +107,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         toggleFavorite,
         isSigningIn,
         setIsSigningIn,
+        isGrayscale,
+        toggleGrayscale,
       }}
     >
       {children}

@@ -487,7 +487,7 @@ export function AdminCRMClient({ initialSites }: { initialSites: WebsiteItem[] }
                   <label className="text-xs font-semibold uppercase tracking-wider text-muted">{field.label}</label>
                   <div className="flex flex-wrap gap-1 rounded-xl border border-white/10 bg-[#08090a] p-2.5 min-h-[90px] items-start">
                     {field.defaults.map((tag) => {
-                      const isSelected = form[field.listKey as keyof typeof initialFormState].includes(tag);
+                      const isSelected = (form[field.listKey as keyof typeof initialFormState] as string[]).includes(tag);
                       return (
                         <button
                           key={tag}

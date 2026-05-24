@@ -13,6 +13,11 @@
 
 html {
   scroll-behavior: smooth;
+  transition: filter 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.grayscale-mode {
+  filter: grayscale(100%);
 }
 
 body {
