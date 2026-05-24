@@ -116,8 +116,8 @@ export function AdminCRMClient({ initialSites }: { initialSites: WebsiteItem[] }
 
   // Checkbox lists togglers
   const toggleItem = <T,>(listKey: string, val: T) => {
-    setForm((prev: any) => {
-      const arr = prev[listKey] as T[];
+    setForm((prev) => {
+      const arr = prev[listKey as keyof typeof initialFormState] as T[];
       const nextArr = arr.includes(val) ? arr.filter((x) => x !== val) : [...arr, val];
       return { ...prev, [listKey]: nextArr };
     });
@@ -487,7 +487,7 @@ export function AdminCRMClient({ initialSites }: { initialSites: WebsiteItem[] }
                   <label className="text-xs font-semibold uppercase tracking-wider text-muted">{field.label}</label>
                   <div className="flex flex-wrap gap-1 rounded-xl border border-white/10 bg-[#08090a] p-2.5 min-h-[90px] items-start">
                     {field.defaults.map((tag) => {
-                      const isSelected = (form as any)[field.listKey].includes(tag);
+                      const isSelected = form[field.listKey as keyof typeof initialFormState].includes(tag);
                       return (
                         <button
                           key={tag}
@@ -518,7 +518,7 @@ export function AdminCRMClient({ initialSites }: { initialSites: WebsiteItem[] }
                   { label: "Motion Score", key: "motion", color: "text-violet-400" },
                   { label: "Originality Score", key: "originality", color: "text-emerald-400" },
                 ].map((slider) => {
-                  const val = (form.score as any)[slider.key];
+                  const val = form.score[slider.key as keyof typeof form.score];
                   return (
                     <div key={slider.key} className="flex flex-col gap-1">
                       <div className="flex justify-between text-xs font-medium">

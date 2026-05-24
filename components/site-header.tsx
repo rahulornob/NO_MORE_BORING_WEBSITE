@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/auth-context";
 import { GoogleSignInModal } from "@/components/google-signin-modal";
-import { Heart, Lock, LogOut, LayoutDashboard, Menu, X } from "lucide-react";
+import { Heart, Lock, LogOut, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { clsx } from "clsx";
 

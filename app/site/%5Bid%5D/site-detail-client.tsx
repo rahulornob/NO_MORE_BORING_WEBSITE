@@ -121,7 +121,7 @@ export function SiteDetailClient({ site, relatedSites }: SiteDetailClientProps) 
           <div>
             <h3 className="text-xs font-bold uppercase tracking-widest text-muted mb-3">Curator Note</h3>
             <p className="text-sm text-white/80 leading-relaxed italic border-l-2 border-violet-500 pl-4">
-              "{site.curatorNote}"
+              &ldquo;{site.curatorNote}&rdquo;
             </p>
           </div>
 

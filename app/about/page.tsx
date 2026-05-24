@@ -16,7 +16,7 @@ export default function AboutPage() {
           The Web is an Art Form.
         </h1>
         <p className="text-md text-muted max-w-xl mx-auto leading-relaxed mt-2">
-          We believe software shouldn't just be functional — it should be delightful, tactile, and designed with unmistakable taste.
+          We believe software shouldn&apos;t just be functional — it should be delightful, tactile, and designed with unmistakable taste.
         </p>
       </div>
 
@@ -84,7 +84,7 @@ export default function AboutPage() {
         {/* Mission Quote */}
         <div className="rounded-2xl bg-gradient-to-br from-violet-500/10 to-indigo-500/10 border border-violet-500/20 p-8 text-center mt-6">
           <p className="text-sm font-medium text-white italic">
-            "Design is not just what it looks like and feels like. Design is how it works."
+            &ldquo;Design is not just what it looks like and feels like. Design is how it works.&rdquo;
           </p>
           <span className="text-[10px] text-muted block uppercase tracking-widest mt-3">— Steve Jobs</span>
         </div>
