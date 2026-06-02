@@ -1,13 +1,21 @@
-import { GalleryExplorer } from "@/components/gallery-explorer";
-import { ScrollHero } from "@/components/scroll-hero";
-import { getWebsites } from "@/lib/db";
+import { Header } from '@/components/header';
+import { Hero } from '@/components/hero';
+import { Gallery } from '@/components/gallery';
+import { getWebsites } from '@/lib/db';
 
-export default function Home() {
-  const sites = getWebsites();
+export const metadata = {
+  title: 'Inspiration Gallery',
+  description: 'A curated collection of inspiring websites and design work.',
+};
+
+export default async function Home() {
+  const websites = await getWebsites();
+
   return (
     <>
-      <ScrollHero />
-      <GalleryExplorer sites={sites} />
+      <Header />
+      <Hero />
+      <Gallery websites={websites} />
     </>
   );
 }

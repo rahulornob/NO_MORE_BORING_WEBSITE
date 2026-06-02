@@ -1,12 +1,16 @@
-import { getWebsites } from "@/lib/db";
-import { AdminCRMClient } from "./admin-crm-client";
+import { Header } from '@/components/header';
+import { AdminPanel } from '@/components/admin-panel';
 
 export const metadata = {
-  title: "CRM Administration Dashboard",
-  description: "Create, update, and delete curation entries in the gallery database.",
+  title: 'Admin Panel',
+  description: 'Manage your website collection.',
 };
 
 export default function AdminPage() {
-  const websitesList = getWebsites();
-  return <AdminCRMClient initialSites={websitesList} />;
+  return (
+    <>
+      <Header />
+      <AdminPanel />
+    </>
+  );
 }

@@ -1,41 +1,20 @@
-import type { Metadata } from "next";
-import type { ReactNode } from "react";
-import "@/app/globals.css";
-import { SiteHeader } from "@/components/site-header";
-import { AuthProvider } from "@/context/auth-context";
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://nomoreboringwebsites.com"),
-  title: {
-    default: "No More Boring Websites",
-    template: "%s | No More Boring Websites",
-  },
-  description:
-    "An extremely curated website inspiration gallery for designers who care about taste, motion, and modern web craft.",
-  openGraph: {
-    title: "No More Boring Websites",
-    description:
-      "No generic templates. No filler. Only websites worth studying.",
-    url: "https://nomoreboringwebsites.com",
-    siteName: "No More Boring Websites",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "No More Boring Websites",
-    description:
-      "The most curated website inspiration feed for designers who care about taste.",
-  },
+  title: 'Inspiration Gallery - Curated Design Collections',
+  description: 'A carefully curated gallery of inspiring websites and design work.',
 };
 
-export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body>
-        <AuthProvider>
-          <SiteHeader />
-          {children}
-        </AuthProvider>
+      <body className="bg-bg-primary">
+        {children}
       </body>
     </html>
   );

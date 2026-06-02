@@ -4,24 +4,39 @@ const config: Config = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
-        ink: "#f7f8f8",
-        paper: "#08090a",
-        bone: "#101113",
-        line: "#25272b",
-        accent: "#8b5cf6",
-        muted: "#8b8f98"
+        bg: {
+          primary: '#0a0a0a',
+          secondary: '#141414',
+          tertiary: '#1a1a1a',
+          hover: '#252525',
+        },
+        text: {
+          primary: '#ffffff',
+          secondary: '#b0b0b0',
+          tertiary: '#808080',
+        },
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", "Inter", "system-ui", "sans-serif"]
       },
-      boxShadow: {
-        lift: "0 24px 80px rgba(0, 0, 0, 0.45)"
-      }
+      animation: {
+        'glow-pulse': 'glow-pulse 3s ease-in-out infinite',
+        'float': 'float 6s ease-in-out infinite',
+      },
+      keyframes: {
+        'glow-pulse': {
+          '0%, 100%': { 'box-shadow': '0 0 20px rgba(255, 255, 255, 0.1)' },
+          '50%': { 'box-shadow': '0 0 40px rgba(255, 255, 255, 0.2)' },
+        },
+        'float': {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+      },
     },
   },
   plugins: [],

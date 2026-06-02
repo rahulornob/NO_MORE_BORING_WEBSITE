@@ -1,42 +1,18 @@
-export type Category =
-  | "Ecommerce"
-  | "SaaS"
-  | "Animated"
-  | "3D"
-  | "Webflow"
-  | "Framer"
-  | "Portfolio"
-  | "Agency"
-  | "AI"
-  | "Experimental";
-
-export type Platform =
-  | "Webflow"
-  | "Framer"
-  | "Shopify"
-  | "Custom Code"
-  | "WordPress";
-
-export type WebsiteItem = {
+export interface Website {
   id: string;
   title: string;
   url: string;
-  screenshot: string;
-  categories: Category[];
-  platforms: Platform[];
-  styles: string[];
-  interactions: string[];
-  colors: string[];
-  layout: string[];
-  industry: string;
-  score: {
-    taste: number;
-    motion: number;
-    originality: number;
-  };
-  curatorNote: string;
-  breakdown: string;
-  featuredAt?: string;
-};
+  imageUrl: string;
+  category?: string;
+  description?: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
-export type SortKey = "newest" | "taste" | "motion" | "originality";
+export interface BulkImportItem {
+  title: string;
+  url: string;
+  imageUrl: string;
+  category?: string;
+  description?: string;
+}

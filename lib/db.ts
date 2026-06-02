@@ -1,130 +1,116 @@
-import fs from "fs";
-import path from "path";
-import type { WebsiteItem } from "./types";
+import { supabase } from './supabase';
+import { Website, BulkImportItem } from './types';
 
-const dbPath = path.join(process.cwd(), "lib/sites_db.json");
+// Get all websites
+export async function getWebsites(): Promise<Website[]> {
+  const { data, error } = await supabase
+    .from('websites')
+    .select('*')
+    .order('createdAt', { ascending: false });
 
-type UserProfile = {
-  favorites: string[];
-};
-
-type DBStructure = {
-  websites: WebsiteItem[];
-  weeklyDrops: {
-    slug: string;
-    title: string;
-    description: string;
-    ids: string[];
-  }[];
-  users?: Record<string, UserProfile>;
-};
-
-function readDb(): DBStructure {
-  try {
-    const data = fs.readFileSync(dbPath, "utf-8");
-    const parsed = JSON.parse(data);
-    if (!parsed.users) {
-      parsed.users = {};
-    }
-    return parsed;
-  } catch (error) {
-    console.error("Error reading database file:", error);
-    return { websites: [], weeklyDrops: [], users: {} };
-  }
-}
-
-function writeDb(data: DBStructure) {
-  try {
-    fs.writeFileSync(dbPath, JSON.stringify(data, null, 2), "utf-8");
-  } catch (error) {
-    console.error("Error writing to database file:", error);
-  }
-}
-
-export function getWebsites(): WebsiteItem[] {
-  return readDb().websites;
-}
-
-export function getWeeklyDrops() {
-  return readDb().weeklyDrops;
-}
-
-export function getSiteById(id: string): WebsiteItem | undefined {
-  return getWebsites().find((site) => site.id === id);
-}
-
-export function addWebsite(site: WebsiteItem): boolean {
-  const db = readDb();
-  if (db.websites.some((w) => w.id === site.id)) {
-    return false; // ID already exists
-  }
-  db.websites.unshift(site); // Add to the beginning
-  writeDb(db);
-  return true;
-}
-
-export function updateWebsite(updatedSite: WebsiteItem): boolean {
-  const db = readDb();
-  const index = db.websites.findIndex((w) => w.id === updatedSite.id);
-  if (index === -1) {
-    return false; // Not found
-  }
-  db.websites[index] = { ...db.websites[index], ...updatedSite };
-  writeDb(db);
-  return true;
-}
-
-export function deleteWebsite(id: string): boolean {
-  const db = readDb();
-  const initialLength = db.websites.length;
-  db.websites = db.websites.filter((w) => w.id !== id);
-  if (db.websites.length === initialLength) {
-    return false; // Not found
-  }
-  writeDb(db);
-  return true;
-}
-
-// User favorites
-export function getUserFavorites(email: string): string[] {
-  const db = readDb();
-  return db.users?.[email]?.favorites || [];
-}
-
-export function toggleUserFavorite(email: string, siteId: string): string[] {
-  const db = readDb();
-  if (!db.users) {
-    db.users = {};
-  }
-  if (!db.users[email]) {
-    db.users[email] = { favorites: [] };
+  if (error) {
+    console.error('Error fetching websites:', error);
+    return [];
   }
 
-  const favorites = db.users[email].favorites;
-  const index = favorites.indexOf(siteId);
-
-  if (index === -1) {
-    favorites.push(siteId);
-  } else {
-    favorites.splice(index, 1);
-  }
-
-  writeDb(db);
-  return favorites;
+  return data || [];
 }
 
-export function getRelatedSites(site: WebsiteItem, limit = 3): WebsiteItem[] {
-  return getWebsites()
-    .filter((item) => item.id !== site.id)
-    .map((item) => {
-      const overlap =
-        item.categories.filter((tag) => site.categories.includes(tag)).length * 3 +
-        item.platforms.filter((tag) => site.platforms.includes(tag)).length * 2 +
-        item.styles.filter((tag) => site.styles.includes(tag)).length;
+// Get website by ID
+export async function getWebsiteById(id: string): Promise<Website | null> {
+  const { data, error } = await supabase
+    .from('websites')
+    .select('*')
+    .eq('id', id)
+    .single();
 
-      return { item, overlap };
+  if (error) {
+    console.error('Error fetching website:', error);
+    return null;
+  }
+
+  return data;
+}
+
+// Add single website
+export async function addWebsite(website: Omit<Website, 'id' | 'createdAt' | 'updatedAt'>): Promise<Website | null> {
+  const now = new Date().toISOString();
+  const { data, error } = await supabase
+    .from('websites')
+    .insert({
+      ...website,
+      createdAt: now,
+      updatedAt: now,
     })
-    .sort((a, b) => b.overlap - a.overlap || b.item.score.taste - a.item.score.taste)
-    .slice(0, limit)
-    .map(({ item }) => item);
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error adding website:', error);
+    return null;
+  }
+
+  return data;
+}
+
+// Update website
+export async function updateWebsite(id: string, updates: Partial<Website>): Promise<Website | null> {
+  const now = new Date().toISOString();
+  const { data, error } = await supabase
+    .from('websites')
+    .update({
+      ...updates,
+      updatedAt: now,
+    })
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error updating website:', error);
+    return null;
+  }
+
+  return data;
+}
+
+// Delete website
+export async function deleteWebsite(id: string): Promise<boolean> {
+  const { error } = await supabase
+    .from('websites')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.error('Error deleting website:', error);
+    return false;
+  }
+
+  return true;
+}
+
+// Bulk import websites
+export async function bulkImportWebsites(websites: BulkImportItem[]): Promise<{ success: number; failed: number }> {
+  const now = new Date().toISOString();
+  const websitesToInsert = websites.map((w, index) => ({
+    id: `website-${Date.now()}-${index}`,
+    title: w.title,
+    url: w.url,
+    imageUrl: w.imageUrl,
+    category: w.category,
+    description: w.description,
+    createdAt: now,
+    updatedAt: now,
+  }));
+
+  const { error } = await supabase
+    .from('websites')
+    .insert(websitesToInsert);
+
+  if (error) {
+    console.error('Error bulk importing websites:', error);
+    return { success: 0, failed: websites.length };
+  }
+
+  return { success: websites.length, failed: 0 };
 }
