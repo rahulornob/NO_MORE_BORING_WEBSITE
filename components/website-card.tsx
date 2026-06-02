@@ -4,16 +4,14 @@ import { useState } from 'react';
 import Image from 'next/image';
 
 interface WebsiteCardProps {
-  id: string;
   title: string;
   url: string;
   imageUrl: string;
   category?: string;
 }
 
-export function WebsiteCard({ id, title, url, imageUrl, category }: WebsiteCardProps) {
+export function WebsiteCard({ title, url, imageUrl, category }: WebsiteCardProps) {
   const [isImageLoading, setIsImageLoading] = useState(true);
-  const [showReveal, setShowReveal] = useState(false);
 
   return (
     <a
@@ -21,8 +19,6 @@ export function WebsiteCard({ id, title, url, imageUrl, category }: WebsiteCardP
       target="_blank"
       rel="noopener noreferrer"
       className="group relative h-80 rounded-lg overflow-hidden card-hover"
-      onMouseEnter={() => setShowReveal(true)}
-      onMouseLeave={() => setShowReveal(false)}
     >
       {/* Background image */}
       <div className="absolute inset-0 bg-bg-secondary">

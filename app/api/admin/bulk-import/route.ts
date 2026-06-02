@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
     // Validate each website has required fields
     const invalidWebsites = body.websites.filter(
-      (w: any) => !w.title || !w.url || !w.imageUrl
+      (w: Record<string, string>) => !w.title || !w.url || !w.imageUrl
     );
 
     if (invalidWebsites.length > 0) {

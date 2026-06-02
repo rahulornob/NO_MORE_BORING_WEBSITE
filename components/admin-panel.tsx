@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { useState as useStateAdvanced } from 'react';
 
 interface FormData {
   title: string;
@@ -50,7 +49,7 @@ export function AdminPanel() {
         const error = await response.json();
         setMessage({ type: 'error', text: error.message || 'Failed to add website' });
       }
-    } catch (error) {
+    } catch {
       setMessage({ type: 'error', text: 'Error adding website' });
     } finally {
       setLoading(false);
@@ -74,7 +73,7 @@ export function AdminPanel() {
         .filter(line => line.trim())
         .map(line => {
           const values = line.split(',').map(v => v.trim());
-          const obj: any = {};
+          const obj: Record<string, string> = {};
           headers.forEach((header, index) => {
             obj[header] = values[index] || '';
           });
@@ -100,7 +99,7 @@ export function AdminPanel() {
         const error = await response.json();
         setCsvMessage({ type: 'error', text: error.message || 'Failed to import websites' });
       }
-    } catch (error) {
+    } catch {
       setCsvMessage({ type: 'error', text: 'Error processing CSV file' });
     } finally {
       setLoading(false);
