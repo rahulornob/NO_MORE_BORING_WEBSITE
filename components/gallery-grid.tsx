@@ -1,26 +1,19 @@
-import type { WebsiteItem } from "@/lib/types";
-import { WebsiteCard } from "@/components/website-card";
+import type { Website } from "@/lib/types";
+import { WebsiteCard } from "./website-card";
 
-type GalleryGridProps = {
-  sites: WebsiteItem[];
-};
-
-export function GalleryGrid({ sites }: GalleryGridProps) {
-  if (!sites.length) {
+export function GalleryGrid({ sites }: { sites: Website[] }) {
+  if (sites.length === 0) {
     return (
-      <div className="border-y border-line py-20 text-center">
-        <p className="text-xl font-semibold text-ink">No sites found.</p>
-        <p className="mt-2 text-sm text-muted">
-          Try clearing a filter or searching for a broader style.
-        </p>
-      </div>
+      <p className="rounded-xl border border-dashed border-line px-6 py-16 text-center text-sm text-muted">
+        Nothing here yet. Try a different search or browse another tag.
+      </p>
     );
   }
 
   return (
-    <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+    <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
       {sites.map((site) => (
-        <WebsiteCard key={site.id} site={site} />
+        <WebsiteCard key={site.slug} site={site} />
       ))}
     </div>
   );

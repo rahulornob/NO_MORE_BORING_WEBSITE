@@ -1,27 +1,30 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        ink: "#f7f8f8",
-        paper: "#08090a",
-        bone: "#101113",
-        line: "#25272b",
-        accent: "#8b5cf6",
-        muted: "#8b8f98"
+        paper: "#FAFAF7",
+        ink: "#141412",
+        muted: "#71716A",
+        line: "#E7E7E1",
+        "accent-soft": "#F1F1EC",
+      },
+      maxWidth: {
+        site: "80rem",
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "Inter", "system-ui", "sans-serif"]
+        sans: [
+          "ui-sans-serif",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "Helvetica Neue",
+          "Arial",
+          "sans-serif",
+        ],
       },
-      boxShadow: {
-        lift: "0 24px 80px rgba(0, 0, 0, 0.45)"
-      }
     },
   },
   plugins: [],

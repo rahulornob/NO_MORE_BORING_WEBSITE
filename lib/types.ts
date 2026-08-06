@@ -1,42 +1,46 @@
-export type Category =
-  | "Ecommerce"
-  | "SaaS"
-  | "Animated"
-  | "3D"
-  | "Webflow"
-  | "Framer"
-  | "Portfolio"
-  | "Agency"
-  | "AI"
-  | "Experimental";
+export type SiteStatus = "published" | "draft" | "submitted" | "rejected";
 
-export type Platform =
-  | "Webflow"
-  | "Framer"
-  | "Shopify"
-  | "Custom Code"
-  | "WordPress";
-
-export type WebsiteItem = {
+export type Website = {
+  /** Source record id (Notion page id, sheet row key, or slug for demo data). */
   id: string;
+  slug: string;
   title: string;
   url: string;
-  screenshot: string;
-  categories: Category[];
-  platforms: Platform[];
+  description: string;
+  image: string;
+  categories: string[];
   styles: string[];
-  interactions: string[];
-  colors: string[];
-  layout: string[];
-  industry: string;
-  score: {
-    taste: number;
-    motion: number;
-    originality: number;
-  };
+  platform: string;
+  featured: boolean;
+  status: SiteStatus;
+  /** ISO date string. */
+  publishedAt: string;
   curatorNote: string;
-  breakdown: string;
-  featuredAt?: string;
+  /** Deep link to edit this record at the source (e.g. the Notion page). */
+  editUrl?: string;
 };
 
-export type SortKey = "newest" | "taste" | "motion" | "originality";
+export type TagType = "category" | "style" | "platform";
+
+export type Tag = {
+  slug: string;
+  label: string;
+  type: TagType;
+  count: number;
+};
+
+export type DataSourceName = "notion" | "sheets" | "sample";
+
+export type SubmissionInput = {
+  url: string;
+  title: string;
+  email: string;
+  note: string;
+};
+
+export type Paginated<T> = {
+  items: T[];
+  page: number;
+  totalPages: number;
+  total: number;
+};

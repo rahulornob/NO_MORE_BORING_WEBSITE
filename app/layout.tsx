@@ -1,41 +1,54 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
-import "@/app/globals.css";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/config";
+import { websiteJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
 import { SiteHeader } from "@/components/site-header";
-import { AuthProvider } from "@/context/auth-context";
+import { SiteFooter } from "@/components/site-footer";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://nomoreboringwebsites.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "No More Boring Websites",
-    template: "%s | No More Boring Websites",
+    default: `${SITE_NAME} — Hand-Curated Website Design Inspiration`,
+    template: `%s — ${SITE_NAME}`,
   },
-  description:
-    "An extremely curated website inspiration gallery for designers who care about taste, motion, and modern web craft.",
+  description: SITE_DESCRIPTION,
+  keywords: [
+    "website inspiration",
+    "web design gallery",
+    "design inspiration",
+    "curated websites",
+    "landing page examples",
+    "portfolio inspiration",
+  ],
   openGraph: {
-    title: "No More Boring Websites",
-    description:
-      "No generic templates. No filler. Only websites worth studying.",
-    url: "https://nomoreboringwebsites.com",
-    siteName: "No More Boring Websites",
     type: "website",
+    siteName: SITE_NAME,
+    url: SITE_URL,
+    title: `${SITE_NAME} — Hand-Curated Website Design Inspiration`,
+    description: SITE_DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
-    title: "No More Boring Websites",
-    description:
-      "The most curated website inspiration feed for designers who care about taste.",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body>
-        <AuthProvider>
-          <SiteHeader />
-          {children}
-        </AuthProvider>
+      <body className="flex min-h-screen flex-col">
+        <JsonLd data={websiteJsonLd()} />
+        <SiteHeader />
+        <main className="mx-auto w-full max-w-site flex-1 px-5">{children}</main>
+        <SiteFooter />
       </body>
     </html>
   );

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E8E6"/><stop offset="1" stop-color="#E8B8B0"/></linearGradient></defs>
+  <rect width="1200" height="900" fill="url(#g)"/>
+  <rect width="1200" height="64" fill="#7C3A30" opacity="0.07"/>
+  <circle cx="36" cy="32" r="7" fill="#7C3A30" opacity="0.3"/><circle cx="62" cy="32" r="7" fill="#7C3A30" opacity="0.3"/><circle cx="88" cy="32" r="7" fill="#7C3A30" opacity="0.3"/>
+  <text x="600" y="465" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial" font-size="86" font-weight="700" letter-spacing="-2" fill="#7C3A30">Nectar Market</text>
+  <text x="600" y="528" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial" font-size="27" fill="#7C3A30" opacity="0.6">Groceries, but delightful</text>
+</svg>
