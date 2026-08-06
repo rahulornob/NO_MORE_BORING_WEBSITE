@@ -1,94 +1,86 @@
-import { Sparkles, Compass, Eye, Heart } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { SITE_NAME } from "@/lib/config";
 
-export const metadata = {
-  title: "Our Philosophy | About",
-  description: "Learn about the mission, curating standards, and criteria for studying modern web craft.",
+export const metadata: Metadata = {
+  title: "About — Why We Curate",
+  description: `${SITE_NAME} is a hand-curated web design gallery. Every site is picked by a human for taste, motion and originality — no scraping, no pay-to-play placement, no filler.`,
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
-      
-      {/* Hero Header */}
-      <div className="flex flex-col gap-4 text-center mb-16">
-        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-violet-400">Our Manifesto</span>
-        <h1 className="text-4xl font-extrabold text-white tracking-tight sm:text-5xl">
-          The Web is an Art Form.
-        </h1>
-        <p className="text-md text-muted max-w-xl mx-auto leading-relaxed mt-2">
-          We believe software shouldn&apos;t just be functional — it should be delightful, tactile, and designed with unmistakable taste.
+    <article className="mx-auto max-w-2xl pt-16 sm:pt-24">
+      <h1 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+        Boring is a choice.
+        <br />
+        This is the alternative.
+      </h1>
+
+      <div className="mt-10 space-y-6 leading-relaxed text-muted">
+        <p>
+          The internet is drowning in sameness — the same hero, the same three
+          feature cards, the same testimonial wall. {SITE_NAME} exists to prove
+          it doesn&apos;t have to be that way, and to give designers a place to
+          find work that actually moves the craft forward.
+        </p>
+        <p>
+          Every site in this gallery was chosen by a human. Nothing here is
+          scraped, auto-submitted or paid for. If it&apos;s in the gallery, a
+          curator looked at it, used it, and decided it teaches something worth
+          learning.
         </p>
       </div>
 
-      {/* Main content editorial style */}
-      <div className="flex flex-col gap-12 text-white/80 leading-relaxed text-sm">
-        
-        <section className="flex flex-col gap-4">
-          <p>
-            The modern web has converged on boring layouts, generic templates, and predictable templates. In the search for optimal conversion, we lost surprise. We lost the micro-interactions, the custom cursors, the bold editorial layout spacing, and the cinematic transitions that make browsing feel like visiting a physical gallery.
-          </p>
-          <p>
-            <strong>No More Boring Websites</strong> is a response to this drift. It is an extremely curated museum of design elements, interactions, and visual grids designed specifically for frontend engineers and creative designers who refuse to compromise on craft.
-          </p>
-        </section>
-
-        {/* Curation Standards Grid */}
-        <section className="border-t border-white/10 pt-12">
-          <h2 className="text-lg font-bold text-white mb-6 uppercase tracking-wider text-center sm:text-left">
-            Curation Benchmarks
-          </h2>
-          
-          <div className="grid gap-6 sm:grid-cols-2">
-            <div className="flex gap-4 items-start p-4 rounded-2xl border border-white/5 bg-[#111318]/30">
-              <Eye className="size-8 text-pink-400 shrink-0 mt-1" />
-              <div>
-                <h3 className="font-semibold text-white text-sm">Typographic Taste</h3>
-                <p className="text-xs text-muted mt-1 leading-relaxed">
-                  We look for editorial hierarchy, font pairings, line heights, and layout pacing that command readability and confidence.
-                </p>
-              </div>
+      <h2 className="mt-14 text-xl font-semibold tracking-tight">
+        The rules we curate by
+      </h2>
+      <ol className="mt-6 space-y-5">
+        {[
+          {
+            title: "Taste over trend",
+            body: "Trends age in months. We pick sites whose decisions — type, spacing, color, restraint — will still look considered in five years.",
+          },
+          {
+            title: "Motion with a purpose",
+            body: "Animation earns its place by explaining, guiding or delighting. If it only decorates, it doesn't qualify.",
+          },
+          {
+            title: "Originality that still works",
+            body: "Experimental is welcome; unusable is not. Every pick has to succeed at its actual job — selling, telling, showing.",
+          },
+          {
+            title: "Every pick explained",
+            body: "A screenshot alone teaches nothing. Each site comes with a curator's note on why it works, so you can steal the thinking, not just the look.",
+          },
+        ].map((rule, index) => (
+          <li key={rule.title} className="flex gap-4">
+            <span className="text-sm font-semibold text-muted">
+              0{index + 1}
+            </span>
+            <div>
+              <h3 className="font-semibold">{rule.title}</h3>
+              <p className="mt-1 leading-relaxed text-muted">{rule.body}</p>
             </div>
+          </li>
+        ))}
+      </ol>
 
-            <div className="flex gap-4 items-start p-4 rounded-2xl border border-white/5 bg-[#111318]/30">
-              <Compass className="size-8 text-violet-400 shrink-0 mt-1" />
-              <div>
-                <h3 className="font-semibold text-white text-sm">Functional Motion</h3>
-                <p className="text-xs text-muted mt-1 leading-relaxed">
-                  Animation must clarify. We study scroll stories, dynamic reveals, and micro-interactions that make a product intuitive, not noisy.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-4 items-start p-4 rounded-2xl border border-white/5 bg-[#111318]/30">
-              <Sparkles className="size-8 text-emerald-400 shrink-0 mt-1" />
-              <div>
-                <h3 className="font-semibold text-white text-sm">Originality & Craft</h3>
-                <p className="text-xs text-muted mt-1 leading-relaxed">
-                  We highlight creators breaking conventions: WebGL environments, 3D staging, interactive demos, and bold brutalism.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-4 items-start p-4 rounded-2xl border border-white/5 bg-[#111318]/30">
-              <Heart className="size-8 text-blue-400 shrink-0 mt-1" />
-              <div>
-                <h3 className="font-semibold text-white text-sm">Studied Blueprint</h3>
-                <p className="text-xs text-muted mt-1 leading-relaxed">
-                  Every curation contains a curator note and an engineering breakdown, explaining how designers can recreate the effects in Webflow, Framer, or Custom Code.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Mission Quote */}
-        <div className="rounded-2xl bg-gradient-to-br from-violet-500/10 to-indigo-500/10 border border-violet-500/20 p-8 text-center mt-6">
-          <p className="text-sm font-medium text-white italic">
-            &ldquo;Design is not just what it looks like and feels like. Design is how it works.&rdquo;
-          </p>
-          <span className="text-[10px] text-muted block uppercase tracking-widest mt-3">— Steve Jobs</span>
-        </div>
+      <div className="mt-14 rounded-2xl border border-line bg-accent-soft/60 p-8">
+        <h2 className="text-lg font-semibold tracking-tight">
+          Made something that isn&apos;t boring?
+        </h2>
+        <p className="mt-2 text-sm leading-relaxed text-muted">
+          We review every submission by hand. If it teaches something, it gets
+          in — no fees, no favors.
+        </p>
+        <Link
+          href="/submit"
+          className="mt-5 inline-block rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-paper transition hover:opacity-85"
+        >
+          Submit a site
+        </Link>
       </div>
-    </main>
+    </article>
   );
 }
